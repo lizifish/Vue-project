@@ -18,6 +18,8 @@
             <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i @click="removeKeyword">×</i></li>
             <!-- 品牌的面包屑 -->
             <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(":")[1] }}<i @click="removerTrademark">×</i></li>
+            <!-- 平台的售卖属性 数组截取 split -->
+            <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="attrValue.index">{{ attrValue.split(":")[1] }}<i @click="removeAttr(index)">×</i></li>
           </ul>
         </div>
 
@@ -28,24 +30,14 @@
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
+              <!-- 排序的结构 -->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <!-- 绑定类名添加类名 -->
+                <li :class="{active:isOne}">
+                  <a>综合 <span v-show="isOne">⬆</span> </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{active:isTwo}">
+                  <a>价格 <span v-show="isTwo">⬇</span> </a>
                 </li>
               </ul>
             </div>
@@ -148,8 +140,8 @@ export default {
         categoryName: "",
         //绑定的关键字
         keyword: "",
-        //排序
-        order: "",
+        //排序 初始值
+        order: "1:desc",
         //分页器：代表是第几页
         pageNo: 1,
         //每一页展示的数据个数
@@ -173,9 +165,17 @@ export default {
     //调用函数
     this.getData();
   },
+  //计算属性
   computed: {
     // mapgetters 传递数组
     ...mapGetters(["goodsList"]),
+    //判断order返回值 绑定类名
+    isOne(){
+      return this.searchParams.order.indexOf('1') !== -1;
+    },
+    isTwo(){
+      return this.searchParams.order.indexOf('2') !== -1;
+    }
   },
   //search 页面中会不停的发请求，要把发送请求封装成一个方法进行调用
   methods: {
@@ -221,12 +221,21 @@ export default {
       this.searchParams.trademark = undefined;
       this.getData();
     },
-    //收集平台属性的回调函数（自定义事件）
+    //收集平台售卖属性的回调函数（自定义事件）
     attrInfo(attr,attrValue){
       //整理参数再发送请求 整理参数格式
       let props = `${attr.attrId}:${attrValue}:${attr.attrName}`
-      this.searchParams.props.push(props);
+      //添加需要传递的参数 数组去重判断这个元素的索引值 在数组中有么有 没有话再push进数组内
+      if(this.searchParams.props.indexOf(props) == -1){
+        this.searchParams.props.push(props);
+      }
       //再次发请求
+      this.getData();
+    },
+    //删除数组中的售卖属性
+    removeAttr(index){
+      //根据索引值删除数组中的数据 splice(index,1)
+      this.searchParams.props.splice(index,1);
       this.getData();
     }
   },
