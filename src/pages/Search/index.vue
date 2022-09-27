@@ -33,11 +33,11 @@
               <!-- 排序的结构 -->
               <ul class="sui-nav">
                 <!-- 绑定类名添加类名 -->
-                <li :class="{active:isOne}">
-                  <a>综合 <span v-show="isOne">⬆</span> </a>
+                <li :class="{active:isOne}" @click="changeOrder('1')">
+                  <a>综合 <span v-show="isOne" class="iconfont" :class="{'icon-long-arrow-up':isUp,'icon-long-arrow-down':isDown}"></span></a>
                 </li>
-                <li :class="{active:isTwo}">
-                  <a>价格 <span v-show="isTwo">⬇</span> </a>
+                <li :class="{active:isTwo}" @click="changeOrder('2')">
+                  <a>价格 <span v-show="isTwo" class="iconfont" :class="{'icon-long-arrow-up':isUp,'icon-long-arrow-down':isDown}"></span></a>
                 </li>
               </ul>
             </div>
@@ -141,7 +141,7 @@ export default {
         //绑定的关键字
         keyword: "",
         //排序 初始值
-        order: "1:desc",
+        order: "2:desc",
         //分页器：代表是第几页
         pageNo: 1,
         //每一页展示的数据个数
@@ -175,6 +175,12 @@ export default {
     },
     isTwo(){
       return this.searchParams.order.indexOf('2') !== -1;
+    },
+    isUp(){
+      return this.searchParams.order.indexOf('asc') !== -1;
+    },
+    isDown(){
+      return this.searchParams.order.indexOf('desc') !==-1;
     }
   },
   //search 页面中会不停的发请求，要把发送请求封装成一个方法进行调用
@@ -237,6 +243,11 @@ export default {
       //根据索引值删除数组中的数据 splice(index,1)
       this.searchParams.props.splice(index,1);
       this.getData();
+    },
+    //筛选方法
+    changeOrder(flag){
+      //形参 一个标记代表着点击是谁1或者2
+      console.log(flag)
     }
   },
   //数据监听：监听组件实例身上属性的属性值变化
