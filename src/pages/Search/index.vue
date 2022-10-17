@@ -13,18 +13,22 @@
           </ul>
           <ul class="fl sui-tag">
             <!-- 分类面包屑 -->
-            <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName }}<i @click="removeCategorName">×</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName }}<i
+                @click="removeCategorName">×</i></li>
             <!-- 关键字面包屑 -->
-            <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i @click="removeKeyword">×</i></li>
+            <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i @click="removeKeyword">×</i>
+            </li>
             <!-- 品牌的面包屑 -->
-            <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(":")[1] }}<i @click="removerTrademark">×</i></li>
+            <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(":")[1] }}<i
+                @click="removerTrademark">×</i></li>
             <!-- 平台的售卖属性 数组截取 split -->
-            <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="attrValue.index">{{ attrValue.split(":")[1] }}<i @click="removeAttr(index)">×</i></li>
+            <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="attrValue.index">{{
+            attrValue.split(":")[1] }}<i @click="removeAttr(index)">×</i></li>
           </ul>
         </div>
 
         <!--selector 子组件 子给父传递信息 @ 绑定自定义事件-->
-        <SearchSelector  @trademarkInfo = "trademarkInfo" @attrInfo="attrInfo"/>
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details 商品详情-->
         <div class="details clearfix">
@@ -34,10 +38,12 @@
               <ul class="sui-nav">
                 <!-- 绑定类名添加类名 -->
                 <li :class="{active:isOne}" @click="changeOrder('1')">
-                  <a>综合 <span v-show="isOne" class="iconfont" :class="{'icon-long-arrow-up':isUp,'icon-long-arrow-down':isDown}"></span></a>
+                  <a>综合 <span v-show="isOne" class="iconfont"
+                      :class="{'icon-long-arrow-up':isUp,'icon-long-arrow-down':isDown}"></span></a>
                 </li>
                 <li :class="{active:isTwo}" @click="changeOrder('2')">
-                  <a>价格 <span v-show="isTwo" class="iconfont" :class="{'icon-long-arrow-up':isUp,'icon-long-arrow-down':isDown}"></span></a>
+                  <a>价格 <span v-show="isTwo" class="iconfont"
+                      :class="{'icon-long-arrow-up':isUp,'icon-long-arrow-down':isDown}"></span></a>
                 </li>
               </ul>
             </div>
@@ -45,16 +51,10 @@
           <!-- 商品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li
-                class="yui3-u-1-5"
-                v-for="(goods, index) in goodsList"
-                :key="goods.id"
-              >
+              <li class="yui3-u-1-5" v-for="(goods, index) in goodsList" :key="goods.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img :src="goods.defaultImg"
-                    /></a>
+                    <a href="item.html" target="_blank"><img :src="goods.defaultImg" /></a>
                   </div>
                   <div class="price">
                     <strong>
@@ -64,57 +64,23 @@
                   </div>
                   <div class="attr">
                     <a target="_blank" href="item.html" :title="goods.title">{{
-                      goods.title
+                    goods.title
                     }}</a>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
                   </div>
                   <div class="operate">
-                    <a
-                      href="success-cart.html"
-                      target="_blank"
-                      class="sui-btn btn-bordered btn-danger"
-                      >加入购物车</a
-                    >
-                    <a href="javascript:void(0);" class="sui-btn btn-bordered"
-                      >收藏</a
-                    >
+                    <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
+                    <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
               </li>
             </ul>
           </div>
           <!-- 分页器 -->
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <!-- 子给父传递数据使用自定义事件 -->
+          <Pagination :pageNo='searchParams.pageNo' :pageSize="searchParams.pageSize" :total="total" :continues="5" @getPageNo="getPageNo"></Pagination>
         </div>
       </div>
     </div>
@@ -122,10 +88,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
-  // name: "Search",
+  name: "search-page",
   components: {
     SearchSelector,
   },
@@ -140,8 +106,8 @@ export default {
         categoryName: "",
         //绑定的关键字
         keyword: "",
-        //排序 初始值
-        order: "2:desc",
+        //排序 初始值 默认综合降序
+        order: "1:desc",
         //分页器：代表是第几页
         pageNo: 1,
         //每一页展示的数据个数
@@ -181,7 +147,11 @@ export default {
     },
     isDown(){
       return this.searchParams.order.indexOf('desc') !==-1;
-    }
+    },
+    // 获取分页数据
+    ...mapState({
+      total:state=>state.search.searchList.total,
+    })
   },
   //search 页面中会不停的发请求，要把发送请求封装成一个方法进行调用
   methods: {
@@ -246,14 +216,35 @@ export default {
     },
     //筛选方法
     changeOrder(flag){
-      //形参 一个标记代表着点击是谁1或者2
-      console.log(flag)
+      //形参 一个标记代表着点击是综合1 或者2 价格
+      let originOrder =  this.searchParams.order;
+      // split 把对象变为数组 并用分号分开返回一个新的数组；
+      let originFlag = this.searchParams.order.split(':')[0];
+      let originSort = this.searchParams.order.split(':')[1];
+      // 准备个属性值
+      let newOrder = '';
+      // 判断是否多次点击的同一个按钮
+      if(flag == originFlag){
+        newOrder = `${originFlag}:${originSort == "desc" ? "asc":"desc"}`
+      }else{
+        // 判断点击不同的按钮
+        newOrder = `${flag}:${'desc'}`
+      }
+      //获取的值赋值
+      this.searchParams.order = newOrder;
+      //再次发请求
+      this.getData();
+    },
+    //自定义事件：获取子组建传来的第几页
+    getPageNo(pageNo){
+      this.searchParams.pageNo = pageNo;
+      this.getData();
     }
   },
   //数据监听：监听组件实例身上属性的属性值变化
   watch:{ 
     // 不需要加this 监听路由的信息是否发生变化
-    $route(newValue,oldValue){
+    $route(_newValue,_oldValue){
       //再次发请求之前整理带给服务器的参数
       Object.assign(this.searchParams,this.$route.query,this.$route.params);
       //再次发axja请求
@@ -507,93 +498,6 @@ export default {
                 }
               }
             }
-          }
-        }
-      }
-
-      .page {
-        width: 733px;
-        height: 66px;
-        overflow: hidden;
-        float: right;
-
-        .sui-pagination {
-          margin: 18px 0;
-
-          ul {
-            margin-left: 0;
-            margin-bottom: 0;
-            vertical-align: middle;
-            width: 490px;
-            float: left;
-
-            li {
-              line-height: 18px;
-              display: inline-block;
-
-              a {
-                position: relative;
-                float: left;
-                line-height: 18px;
-                text-decoration: none;
-                background-color: #fff;
-                border: 1px solid #e0e9ee;
-                margin-left: -1px;
-                font-size: 14px;
-                padding: 9px 18px;
-                color: #333;
-              }
-
-              &.active {
-                a {
-                  background-color: #fff;
-                  color: #e1251b;
-                  border-color: #fff;
-                  cursor: default;
-                }
-              }
-
-              &.prev {
-                a {
-                  background-color: #fafafa;
-                }
-              }
-
-              &.disabled {
-                a {
-                  color: #999;
-                  cursor: default;
-                }
-              }
-
-              &.dotted {
-                span {
-                  margin-left: -1px;
-                  position: relative;
-                  float: left;
-                  line-height: 18px;
-                  text-decoration: none;
-                  background-color: #fff;
-                  font-size: 14px;
-                  border: 0;
-                  padding: 9px 18px;
-                  color: #333;
-                }
-              }
-
-              &.next {
-                a {
-                  background-color: #fafafa;
-                }
-              }
-            }
-          }
-
-          div {
-            color: #333;
-            font-size: 14px;
-            float: right;
-            width: 241px;
           }
         }
       }
