@@ -414,7 +414,9 @@ export default {
           skuId: this.$route.params.skuId,
           skuNum: this.skuNum,
         });
-        //进行路由跳转 商品信息带给下一级的路由组件 （1）路由传参
+        //进行路由跳转 商品信息带给下一级的路由组件 （1）路由传参 简单的数组使用query 形式传递
+        // 复杂的数据：使用会话存储（或者本地存储） 存储字符串
+        sessionStorage.setItem("SKUINFO", JSON.stringify(this.skuInfo));
         this.$router.push({
           name: "addCartSuccess",
           query: { skuNum: this.skuNum },

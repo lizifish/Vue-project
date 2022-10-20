@@ -84,24 +84,25 @@
 import { mapState } from "vuex";
 import Carsousel from "@/components/Carsousel/index.vue";
 export default {
-    name: "list",
-    //挂载完毕后发请求 组件挂载完毕执行mounted 函数
-    mounted() {
-        //派发action：通过vuex发起ajax请求，将数据储存在仓库当中
-        console.log("组件的mounted");
-        this.$store.dispatch("getBannerList");
-        // 在 new Swiper之前 页面结构必须完整
-        // 因为 dispatch 当中涉及到异步语句 导致-for遍历的时候结构还没有完 因此不行 可以只用延迟器 setTimeout()
-        setTimeout(() => { }, 1000);
-    },
-    computed: {
-        //遍历数据
-        ...mapState({ bannerList: (state) => {
-                return state.home.bannerList;
-            },
-        }),
-    },
-    components: { Carsousel }
+  name: "list",
+  //挂载完毕后发请求 组件挂载完毕执行mounted 函数
+  mounted() {
+    //派发action：通过vuex发起ajax请求，将数据储存在仓库当中
+    console.log("组件的mounted");
+    this.$store.dispatch("getBannerList");
+    // 在 new Swiper之前 页面结构必须完整
+    // 因为 dispatch 当中涉及到异步语句 导致-for遍历的时候结构还没有完 因此不行 可以只用延迟器 setTimeout()
+    setTimeout(() => {}, 1000);
+  },
+  computed: {
+    //遍历数据
+    ...mapState({
+      bannerList: (state) => {
+        return state.home.bannerList;
+      },
+    }),
+  },
+  components: { Carsousel },
 };
 </script>
 
@@ -180,7 +181,7 @@ export default {
           width: 25%;
 
           .list-item {
-            background-image: url(./images/icons.png);
+            background-image: url(~@/assets/images/icons.png);
             width: 61px;
             height: 40px;
             display: block;

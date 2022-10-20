@@ -1,9 +1,13 @@
 //小仓库新建完成后一定要在大仓库内合并
 import { reqGoodsInfo } from "@/api";
 import { reqAddOrUpdateShopCart } from "@/api";
+//封装临时游客的模块uuid 生成一个随机的字符串（不能变了）
+import { getUUID } from "@/utils/uuid_token";
 
 const state = {
   goodsInfo: {},
+  //游客临时身份
+  uuid_token: getUUID(),
 };
 const mutations = {
   GETGOODSINFO(state, goodsInfo) {
