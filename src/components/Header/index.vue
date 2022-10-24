@@ -4,12 +4,16 @@
     <div class="top">
       <div class="container">
         <div class="loginList">
-          <p>真快乐汇欢迎您！</p>
-          <p>
+          <p>欢迎你来到我的页面！</p>
+          <p v-if="!userName">
             <span>请</span>
             <!-- 声明式导航必须要有 to属性 -->
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <a>{{ userName }}</a>
+            <a class="register">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -77,22 +81,32 @@ export default {
       //3,对象的写法 || undefined params参数为空时也能正常显示
 
       //如果路由当中有query参数 也要带上
-      if(this.$route.query){
-        let location = {name: "search",params: { keyword: this.keyword || undefined }};
+      if (this.$route.query) {
+        let location = {
+          name: "search",
+          params: { keyword: this.keyword || undefined },
+        };
         location.query = this.$route.query;
         //进行路由跳转  $router
-        this.$router.push(location)
-       }
-    }
+        this.$router.push(location);
+      }
+    },
   },
- // 生命周期开始挂载的时候
- mounted(){
-  //通过全局事件总线清除关键字
-  this.$bus.$on('clear', ()=>{
-    this.keyword = '';
-  })
- }
-}
+  // 生命周期开始挂载的时候
+  mounted() {
+    //通过全局事件总线清除关键字
+    this.$bus.$on("clear", () => {
+      this.keyword = "";
+    });
+  },
+  //计算属性
+  computed: {
+    //用户名获取
+    userName() {
+      return this.$store.state.user.userInfo.name;
+    },
+  },
+};
 </script>
 
 <style scoped lang=less>
@@ -146,7 +160,7 @@ export default {
       .logo {
         img {
           width: 70px;
-          margin:30px 45px;
+          margin: 30px 45px;
         }
       }
     }

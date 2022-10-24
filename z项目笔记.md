@@ -276,3 +276,10 @@ UUID：点击加入购物车的时候 通过请求头给服务器带临时身份
 
 assets 文件夹：放置全部组件共用的静态资源
 在样式中 引入文件 ～@/images
+
+获取验证码的接口地址
+/api/user/passport/sendCode/{phone} get
+
+用户注册完成 登录【token】持久化存储 token
+localStorage.setItem("TOKEN",token)
+localStorage.getItem("TOKEN")

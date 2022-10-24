@@ -7,7 +7,11 @@
     <Rank></Rank>
     <Like></Like>
     <!--  自定义标签也可以使用v-for -->
-    <Floor v-for="(floor,index) in floorList" :key="floor.id" :list="floor"></Floor>
+    <Floor
+      v-for="(floor, index) in floorList"
+      :key="floor.id"
+      :list="floor"
+    ></Floor>
     <Brand></Brand>
   </div>
 </template>
@@ -43,6 +47,8 @@ export default {
   mounted() {
     //派发action，获取floor组件的数据
     this.$store.dispatch("getFloorList");
+    //获取用户信息派发 action获取getUserInfo 在每一个页面都展示
+    this.$store.dispatch("getUserInfo");
   },
   computed: {
     //遍历floor数据

@@ -9,6 +9,7 @@ import home from "./home";
 import search from "./search";
 import detail from "./detail";
 import shopcart from "./shopcart";
+import user from "./user";
 //需要暴露Vuex.Store类的实例
 export default new Vuex.Store({
   modules: {
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     search,
     detail,
     shopcart,
+    user,
   },
 });
