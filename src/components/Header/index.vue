@@ -13,7 +13,7 @@
           </p>
           <p v-else>
             <a>{{ userName }}</a>
-            <a class="register">退出登录</a>
+            <a class="register" @click="logout">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -89,6 +89,18 @@ export default {
         location.query = this.$route.query;
         //进行路由跳转  $router
         this.$router.push(location);
+      }
+    },
+    //退出登录 需要发请求 服务器清除token
+    //清除项目中的数据【】
+    async logout() {
+      try {
+        //如果退出成功发送请求 并跳转到首页
+        await this.$store.dispatch("userLogout");
+        //声明式跳转
+        this.$router.push("/home");
+      } catch (error) {
+        alert(error.message);
       }
     },
   },

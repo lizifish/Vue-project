@@ -26,7 +26,7 @@
               </div>
               <div class="floorBanner">
                 <!-- 轮播图的地方 -->
-                 <Carsousel :list="list.carouselList"></Carsousel>
+                <Carsousel :list="list.carouselList"></Carsousel>
               </div>
               <div class="split">
                 <span class="floor-x-line"></span>
@@ -58,12 +58,12 @@
 </template>
 
 <script>
-import Carsousel from '@/components/Carsousel/index.vue';
+import Carsousel from "@/components/Carsousel/index.vue";
 export default {
-    name: "floor",
-    //接收父组件传过来的数据
-    props: ["list"],
-    components: { Carsousel }
+  name: "floor",
+  //接收父组件传过来的数据
+  props: ["list"],
+  components: { Carsousel },
 };
 </script>
 

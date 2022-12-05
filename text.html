@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const arr = [
+        { id: 1, flag: { a: 1 } },
+        { id: 2, flag: { a: 1 } },
+        { id: 1, flag: { b: 1 } },
+        { id: 4, flag: { a: 1 } },
+      ];
+      let new_arr = [];
+      let obj = {};
+      new_arr = arr.reduce((per, cur) => {
+        console.log(cur);
+      });
+    </script>
+  </body>
+</html>

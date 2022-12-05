@@ -1,6 +1,12 @@
 //登录 注册模块接口
-import { reqGetCode, reqUserRegister, reqUserLogin, reqUserInfo } from "@/api";
-import { setToken, getToken } from "@/utils/token";
+import {
+  reqGetCode,
+  reqUserRegister,
+  reqUserLogin,
+  reqUserInfo,
+  reqLogout,
+} from "@/api";
+import { setToken, getToken, removeToken } from "@/utils/token";
 const state = {
   code: "",
   token: getToken(),
@@ -18,6 +24,14 @@ const mutations = {
   //获取用户信息
   GETUSERINFO(state, userInfo) {
     state.userInfo = userInfo;
+  },
+  // 退出登录
+  CLEAR(state) {
+    // 仓库中有关用户信息清空
+    state.token = "";
+    state.userInfo = {};
+    // 本地存储数据清空
+    removeToken();
   },
 };
 const actions = {
@@ -60,6 +74,17 @@ const actions = {
     let result = await reqUserInfo();
     if (result.code == 200) {
       commit("GETUSERINFO", result.data);
+      return "ok";
+    } else {
+      return Promise.reject(new Error("faile"));
+    }
+  },
+  //退出登录
+  async userLogout({ commit }) {
+    //向服务器发请求 清除token
+    let result = await reqLogout();
+    if (result.code == 200) {
+      commit("CLEAR");
       return "ok";
     } else {
       return Promise.reject(new Error("faile"));

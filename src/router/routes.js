@@ -46,7 +46,7 @@ export default [
     }),
   },
   {
-    path: "/login",
+    path: "/login/",
     component: Login,
     meta: { show: false },
   },

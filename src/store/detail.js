@@ -26,7 +26,7 @@ const actions = {
   async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
     //加入购物车返回的解构 发请求以后是前台把参数带给服务器 服务器写入数据成功 返回code = 200 代表成功 不会再返回其他的数据 不需要存储数据
     let result = await reqAddOrUpdateShopCart(skuId, skuNum);
-    // console.log(result);
+    // console.log(result, "1111");
     // 加购成功
     if (result.code == 200) {
       return "success";

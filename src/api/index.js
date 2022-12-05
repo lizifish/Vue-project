@@ -51,3 +51,7 @@ export const reqUserLogin = (data) =>
 //获取永福信息接口 /api/user/passport/auth/getUserInfo get 需要用户的token校验
 export const reqUserInfo = () =>
   requests({ url: "/user/passport/auth/getUserInfo", method: "get" });
+
+// 退出登录接口 /api/user/passport/logout get 没有参数
+export const reqLogout = () =>
+  requests({ url: "/user/passport/logout", method: "get" });

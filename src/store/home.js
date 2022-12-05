@@ -9,42 +9,41 @@ const state = {
   floorList: [],
 };
 const mutations = {
-  CATEGORYLIST(state, categoryList) {
+  categoryList(state, categoryList) {
     state.categoryList = categoryList;
   },
   GETBANNERLIST(state, bannerList) {
     state.bannerList = bannerList;
-    console.log('修改仓库中bannerList数据')
+    console.log("修改仓库中bannerList数据");
   },
   GETFLOORLIST(state, floorList) {
     state.floorList = floorList;
-  }
+  },
 };
 const actions = {
   // 通过API里面的接口调用函数，向服务器发请求，获取服务器数据 async $ await 同时使用，调用数据返回成功结果
   async categoryList({ commit }) {
     let result = await reqCategoryList();
     if (result.code == 200) {
-      commit("CATEGORYLIST", result.data)
+      commit("categoryList", result.data);
     }
   },
 
   //获取首页轮播数据
   async getBannerList({ commit }) {
-    console.log("在向服务器发ajax请求 获取轮播图的数据")
+    console.log("在向服务器发ajax请求 获取轮播图的数据");
     let result = await reqGetBannerList();
     if (result.code == 200) {
-      commit("GETBANNERLIST", result.data)
+      commit("GETBANNERLIST", result.data);
     }
   },
   // 获取floor数据
   async getFloorList({ commit }) {
     let result = await reqFloorList();
     if (result.code == 200) {
-      commit("GETFLOORLIST", result.data)
+      commit("GETFLOORLIST", result.data);
     }
-  }
-
+  },
 };
 const getters = {};
 export default {
@@ -52,4 +51,4 @@ export default {
   mutations,
   actions,
   getters,
-}
+};

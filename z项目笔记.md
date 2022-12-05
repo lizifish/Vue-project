@@ -283,3 +283,6 @@ assets 文件夹：放置全部组件共用的静态资源
 用户注册完成 登录【token】持久化存储 token
 localStorage.setItem("TOKEN",token)
 localStorage.getItem("TOKEN")
+
+导航守卫：
+用户已经登录，不能再回到登录页
